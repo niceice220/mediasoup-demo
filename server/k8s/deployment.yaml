@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mediasoup-server
+spec:
+  selector:
+    matchLabels:
+      app: mediasoup-server
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: mediasoup-server
+    spec:
+      containers:
+      - name: mediasoup-server
+        image: registry.cn-shanghai.aliyuncs.com/niceice/mediasoup-server
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+      imagePullSecrets:
+      - name: aliyun-credentials-sh
